@@ -15,9 +15,17 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         Vector3 direction = -(transform.position - player.transform.position).normalized;
         enemy.AddForce(direction * speed);
+    }
+    */
+    void Update()
+    {
+        transform.LookAt(player.transform);
+        Quaternion targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 1 * Time.deltaTime);
+        transform.position += transform.forward * 1f * Time.deltaTime;
     }
 }
