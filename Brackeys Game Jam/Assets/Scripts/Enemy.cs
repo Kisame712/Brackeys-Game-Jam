@@ -5,13 +5,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 5.0f;
-    private GameObject player;
+    private Transform player;
     private Rigidbody enemy;
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player").GetComponent < Transform >();
     }
 
     // Update is called once per frame
