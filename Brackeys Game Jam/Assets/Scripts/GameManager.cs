@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     private float timerTime = 60.0f;
     private bool isGameActive;
     public GameObject WinPanel;
-
     public void GameOver()
     {
         WinPanel.SetActive(true);
@@ -28,7 +27,9 @@ public class GameManager : MonoBehaviour
     }
     private float spawnBoundMin = 5f;
     private float spawnBoundMax = 10f; 
+
     // Start is called before the first frame update
+
     void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
@@ -42,12 +43,12 @@ public class GameManager : MonoBehaviour
         timerTime -= Time.deltaTime;
         Mathf.Round(timerTime);
         timer.text = "TIMER:\n " + timerTime;
-        if(timerTime<0)
+        if (timerTime < 0)
         {
             isGameActive = false;
             Debug.Log("You Survived!");
-            //GameOver();
-        }    
+            GameOver();
+        }
     }
     IEnumerator Spawn()
     {
@@ -66,4 +67,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2);
         }
     }
-}
+    
+        
+}  
+
+
