@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
     private Transform playerTransform;
     public List<GameObject> enemies;
     public TextMeshProUGUI timer;
-    private float timerTime = 60.0f;
-    private bool isGameActive;
+    public float timerTime = 60.0f;
+    public bool isGameActive;
     public GameObject WinPanel;
-
+    public GameObject LosePanel;
     public void GameOver()
     {
         WinPanel.SetActive(true);
@@ -20,21 +20,23 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void Back()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
     }
     private float spawnBoundMin = 5f;
-    private float spawnBoundMax = 10f; 
-    // Start is called before the first frame update
-    void Start()
+    private float spawnBoundMax = 10f;
+
+     void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         isGameActive = true;
         StartCoroutine(Spawn());
+
     }
+    // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()
@@ -42,12 +44,12 @@ public class GameManager : MonoBehaviour
         timerTime -= Time.deltaTime;
         Mathf.Round(timerTime);
         timer.text = "TIMER:\n " + timerTime;
-        if(timerTime<0)
+        if (timerTime < 0)
         {
             isGameActive = false;
             Debug.Log("You Survived!");
-            //GameOver();
-        }    
+            GameOver();
+        }
     }
     IEnumerator Spawn()
     {
@@ -66,4 +68,11 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2);
         }
     }
-}
+    public void Death()
+    {
+        LosePanel.SetActive(true);
+    }
+
+}  
+
+
