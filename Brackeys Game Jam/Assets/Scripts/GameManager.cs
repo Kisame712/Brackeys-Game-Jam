@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private Transform playerTransform;
@@ -10,7 +11,23 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timer;
     private float timerTime = 60.0f;
     private bool isGameActive;
+    public GameObject WinPanel;
+   
+    public void GameOver()
+    {
+        WinPanel.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void Back()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
     // Start is called before the first frame update
+
     void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
@@ -24,12 +41,12 @@ public class GameManager : MonoBehaviour
         timerTime -= Time.deltaTime;
         Mathf.Round(timerTime);
         timer.text = "TIMER:\n " + timerTime;
-        if(timerTime<0)
+        if (timerTime < 0)
         {
             isGameActive = false;
             Debug.Log("You Survived!");
-            //GameOver();
-        }    
+            GameOver();
+        }
     }
     IEnumerator Spawn()
     {
@@ -46,4 +63,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2);
         }
     }
-}
+    
+        
+}  
+
+
