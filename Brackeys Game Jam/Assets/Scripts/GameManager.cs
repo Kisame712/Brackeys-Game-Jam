@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     private float timerTime = 60.0f;
     private bool isGameActive;
     public GameObject WinPanel;
-   
     public void GameOver()
     {
         WinPanel.SetActive(true);
@@ -26,6 +25,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+    private float spawnBoundMin = 5f;
+    private float spawnBoundMax = 10f; 
+
     // Start is called before the first frame update
 
     void Start()
@@ -52,14 +54,16 @@ public class GameManager : MonoBehaviour
     {
         while (isGameActive)
         {
-            float randomX = Random.Range(playerTransform.position.x + 5, playerTransform.position.x + 10);
-            float randomZ = Random.Range(playerTransform.position.z + 5, playerTransform.position.z + 10);
+            float randomX = Random.Range(playerTransform.position.x + spawnBoundMin, playerTransform.position.x + spawnBoundMax);
+            float randomZ = Random.Range(playerTransform.position.z + spawnBoundMin, playerTransform.position.z + spawnBoundMax);
             Vector3 randomPos = new Vector3(randomX, 0.5f, randomZ);
             int randomIndex = Random.Range(0, 3);
             if (isGameActive)
             {
                 Instantiate(enemies[randomIndex], randomPos, enemies[randomIndex].transform.rotation);
             }
+            spawnBoundMin -= 0.04f;
+            spawnBoundMax -= 0.04f;
             yield return new WaitForSeconds(2);
         }
     }
