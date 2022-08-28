@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private Transform playerTransform;
@@ -10,6 +11,21 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timer;
     private float timerTime = 60.0f;
     private bool isGameActive;
+    public GameObject WinPanel;
+
+    public void GameOver()
+    {
+        WinPanel.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void Back()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
     private float spawnBoundMin = 5f;
     private float spawnBoundMax = 10f; 
     // Start is called before the first frame update
